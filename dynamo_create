@@ -1,0 +1,34 @@
+{
+#表名
+ TableName : "Music",
+ 
+# 主键
+KeySchema: [ 
+ { 
+ AttributeName: "Artist", 
+ KeyType: "HASH", //Partition key
+ },
+ { 
+ AttributeName: "SongTitle", 
+ KeyType: "RANGE" //Sort key
+ }
+ ],
+ 
+ #键值类型定义，不定义默认字符串
+ AttributeDefinitions: [
+ { 
+ AttributeName: "Artist", 
+ AttributeType: "S" 
+ },
+ { 
+ AttributeName: "SongTitle", 
+ AttributeType: "S" 
+ }
+ ],
+ 
+ #读写容量设置，可后期更改
+ ProvisionedThroughput: { 
+ ReadCapacityUnits: 1, 
+ WriteCapacityUnits: 1
+ }
+}
