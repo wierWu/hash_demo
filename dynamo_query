@@ -1,4 +1,6 @@
-// Return a single song, by primary key
+// hashkey->Artist  rangeKey->SongTitle
+
+// 基于主键返回 music
 {
  TableName: "Music",
  KeyConditionExpression: "Artist = :a and SongTitle = :t",
@@ -8,7 +10,7 @@
  }
 }
 
-// Return all of the songs by an artist
+// 返回分区键下a 所有的music
 {
  TableName: "Music",
  KeyConditionExpression: "Artist = :a",
@@ -17,7 +19,7 @@
  }
 }
 
-// Return all of the songs by an artist, matching first part of title
+// 返回所有SongTitle like "Call%" 的music
 {
  TableName: "Music",
  KeyConditionExpression: "Artist = :a and begins_with(SongTitle, :t)",
@@ -27,8 +29,7 @@
  }
 }
 
-// Return all of the songs by an artist, with a particular word in the title...
-// ...but only if the price is less than 1.00
+// 返回所有SongTitle like "%Today%" 的music
 {
  TableName: "Music",
  KeyConditionExpression: "Artist = :a and contains(SongTitle, :t)",
