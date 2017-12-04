@@ -1,0 +1,38 @@
+// 返回music表所有数据
+{
+ TableName: "Music"
+}
+
+// 返回music表所有数据，只包含Artist和Title 字段
+{
+ TableName: "Music"
+ ProjectionExpression: "Artist, Title"
+}
+
+
+// 返回music表满足price<1 的项目，结果集 只包含Artist和Title 字段
+{
+ TableName: "Music"
+ ProjectionExpression: "Artist, Title"
+  FilterExpression: "price < :p",
+ ExpressionAttributeValues: {
+ ":a": "No One You Know",
+ ":p": 1.00
+ }
+}
+
+// java 示例
+
+Map<String, AttributeValue> expressionAttributeValues = 
+ new HashMap<String, AttributeValue>();
+expressionAttributeValues.put(":val", new AttributeValue().withN("0")); 
+ 
+ScanRequest scanRequest = new ScanRequest()
+ .withTableName("ProductCatalog")
+ .withFilterExpression("Price < :val")
+ .withProjectionExpression("Id")
+ .withExpressionAttributeValues(expressionAttributeValues);
+ScanResult result = client.scan(scanRequest);
+for (Map<String, AttributeValue> item : result.getItems()) {
+ printItem(item);
+}
