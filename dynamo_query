@@ -1,0 +1,41 @@
+// Return a single song, by primary key
+{
+ TableName: "Music",
+ KeyConditionExpression: "Artist = :a and SongTitle = :t",
+ ExpressionAttributeValues: {
+ ":a": "No One You Know",
+ ":t": "Call Me Today"
+ }
+}
+
+// Return all of the songs by an artist
+{
+ TableName: "Music",
+ KeyConditionExpression: "Artist = :a",
+ ExpressionAttributeValues: {
+ ":a": "No One You Know"
+ }
+}
+
+// Return all of the songs by an artist, matching first part of title
+{
+ TableName: "Music",
+ KeyConditionExpression: "Artist = :a and begins_with(SongTitle, :t)",
+ ExpressionAttributeValues: {
+ ":a": "No One You Know",
+ ":t": "Call
+ }
+}
+
+// Return all of the songs by an artist, with a particular word in the title...
+// ...but only if the price is less than 1.00
+{
+ TableName: "Music",
+ KeyConditionExpression: "Artist = :a and contains(SongTitle, :t)",
+ FilterExpression: "price < :p",
+ ExpressionAttributeValues: {
+ ":a": "No One You Know",
+ ":t": "Today",
+ ":p": 1.00
+ }
+}
